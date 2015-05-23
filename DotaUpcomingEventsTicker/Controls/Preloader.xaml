@@ -1,0 +1,305 @@
+﻿<UserControl x:Class="DotaUpcomingEventsTicker.Controls.Preloader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100">
+    <UserControl.Resources>
+        <Color R="200" G="230" B="201" A="255" x:Key="BorderColor" />
+        <Color R="255" G="255" B="255" A="255" x:Key="HighlightColor" />
+        <System:Double x:Key="CentreY">120</System:Double>
+        <Style TargetType="Border" x:Key="BorderStyle">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Width" Value="25" />
+            <Setter Property="Height" Value="60" />
+        </Style>
+        <Duration x:Key="SpinnerDuration">0:0:0.36</Duration>
+        <Duration x:Key="OpacityDuration">0:0:0.1</Duration>
+        <CircleEase x:Key="SpinnerEase" EasingMode="EaseIn" />
+        <BackEase x:Key="OpacityEase" EasingMode="EaseInOut" />
+    </UserControl.Resources>
+    <Grid Margin="0,-200,0,0">
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="0" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.030" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.20" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="30" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.060" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.50" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="60" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.090" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.80" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="90" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.120" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.110" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="120" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.150" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.140" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="150" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.180" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.170" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="180" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.210" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.200" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="210" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.240" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.230" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="240" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.270" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.260" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="270" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.300" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.290" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="300" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.330" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.320" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
+            </Border.Background>
+            <Border.RenderTransform>
+                <RotateTransform Angle="330" CenterX="12.5" CenterY="{StaticResource CentreY}" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:0.360" EasingFunction="{StaticResource SpinnerEase}" Duration="{StaticResource SpinnerDuration}" RepeatBehavior="Forever" Storyboard.TargetProperty="Background.Color" To="{StaticResource HighlightColor}" />
+                                    <DoubleAnimation BeginTime="0:0:0.350" EasingFunction="{StaticResource OpacityEase}" Duration="{StaticResource SpinnerDuration}" Storyboard.TargetProperty="Opacity" From="0.7" To="1" RepeatBehavior="Forever"  />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+    </Grid>
+</UserControl>

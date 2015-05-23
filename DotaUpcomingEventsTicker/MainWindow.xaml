@@ -1,0 +1,204 @@
+﻿<Window x:Class="DotaUpcomingEventsTicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:myControls="clr-namespace:DotaUpcomingEventsTicker"
+        xmlns:ctrl="clr-namespace:DotaUpcomingEventsTicker.Controls"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:converters="clr-namespace:DotaUpcomingEventsTicker.Converters"
+        xmlns:selectors="clr-namespace:DotaUpcomingEventsTicker.Selectors"
+        Title="MainWindow" 
+        Height="550" 
+        Width="350"
+        BorderThickness="1"
+        BorderBrush="Green"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+    <Window.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BoolToVisibilityConverter x:Key="BTVC" />
+            <converters:BoolToOppositeConverter x:Key="BoolToOppositeConverter" />
+            <converters:DebugConverter x:Key="DBG" />
+            
+            <ContextMenu x:Key="NotifierContextMenu" 
+                         Placement="Top"
+                         IsOpen="{Binding Path=DataContext.IsContextMenuVisible}"
+                         x:Shared="False">
+                <MenuItem Header="Close" Command="{Binding Path=DataContext.OnCloseApplicationCommand}" />
+            </ContextMenu>
+
+            <DataTemplate x:Key="UpcomingMatchDataTemplate">
+                <Grid Height="80">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="240" />
+                    </Grid.ColumnDefinitions>
+                    <Border Background="{DynamicResource PrimaryHueLightBrush}"  
+                                    TextBlock.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" 
+                                    CornerRadius="2 0 0 2" 
+                                    Padding="8">
+                        <TextBlock Text="{Binding Path=TimeToMatchLeft}" VerticalAlignment="Center" />
+                    </Border>
+
+                    <Grid Grid.Column="1" Margin="30,8,8,8" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
+                            <Image Source="{Binding Path=Opponent1.ImagePath, Converter={StaticResource DBG}}" VerticalAlignment="Center"></Image>
+                            <TextBlock Text="{Binding Path=Opponent1.Name}"   VerticalAlignment="Center" Margin="5,0,0,0" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Text="vs"  Margin="5,0,0,0" />
+                            <Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>
+                        </StackPanel>
+                       
+
+                        <StackPanel Grid.Row="2"  Orientation="Horizontal" VerticalAlignment="Center" >
+                            <Image Source="{Binding Path=Opponent2.ImagePath, Converter={StaticResource DBG}}" VerticalAlignment="Center"></Image>
+                            <TextBlock Text="{Binding Path=Opponent2.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <ToggleButton Grid.Column="1" 
+                                  Margin="-17 0 0 0" 
+                                  HorizontalAlignment="Left" 
+                                  Style="{StaticResource MaterialDesignActionAccentToggleButton}" 
+                                  Padding="3"
+                                  Command="{Binding ElementName=MatchesListView, Path=DataContext.OnSetNotificationForMatchCommand}"
+                                  CommandParameter="{Binding}"
+                                  IsChecked="{Binding Path=IsMarkedForNotification}">
+                        <ToggleButton.Content>
+                            <Image Source="pack://application:,,,/Resources/alarm_24x24_white.png" Width="18" Height="18"></Image>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+
+                    <!--<Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                            Grid.Column="1" 
+                            Margin="-20 0 0 0" 
+                            HorizontalAlignment="Left"
+                            Command="{Binding ElementName=MatchesListView, Path=DataContext.OnSetNotificationForMatchCommand}"
+                            CommandParameter="{Binding}">
+                        <Viewbox Width="24" Height="24">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M12.5,8H11V14L15.75,16.85L16.5,15.62L12.5,13.25V8M7.88,3.39L6.6,1.86L2,5.71L3.29,7.24L7.88,3.39M22,5.72L17.4,1.86L16.11,3.39L20.71,7.25L22,5.72Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button>-->
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="LiveMatchDataTemplate">
+                <Grid Height="80">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="240" />
+                    </Grid.ColumnDefinitions>
+                    <Border Background="{DynamicResource PrimaryHueLightBrush}"  
+                                    TextBlock.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" 
+                                    CornerRadius="2 0 0 2" 
+                                    Padding="0">
+                        <Button HorizontalAlignment="Center" 
+                                Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                                Margin="0 0 0 0" 
+                                Padding="0"
+                                Width="60"
+                                Command="{Binding ElementName=MatchesListView, Path=DataContext.OnViewLiveMatchCommand}"
+                                CommandParameter="{Binding}">
+                            <TextBlock Text="{Binding TimeToMatchLeft}" VerticalAlignment="Center" Foreground="Black" FontSize="14" />
+                        </Button>
+                    </Border>
+
+                    <Grid Grid.Column="1" Margin="30,8,8,8" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
+                            <Image Source="{Binding Path=Opponent1.ImagePath, Converter={StaticResource DBG}}" VerticalAlignment="Center"></Image>
+                            <TextBlock Text="{Binding Path=Opponent1.Name}"   VerticalAlignment="Center" Margin="5,0,0,0" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Text="vs"  Margin="5,0,0,0" />
+                            <Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2"  Orientation="Horizontal" VerticalAlignment="Center" >
+                            <Image Source="{Binding Path=Opponent2.ImagePath, Converter={StaticResource DBG}}" VerticalAlignment="Center"></Image>
+                            <TextBlock Text="{Binding Path=Opponent2.Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+
+            <selectors:MatchItemTemplateSelector x:Key="MatchItemDataTemplateSelector" 
+                                                 LiveMatchDataTemplate="{StaticResource LiveMatchDataTemplate}"
+                                                 UpcomingMatchDataTemplate="{StaticResource UpcomingMatchDataTemplate}">
+            </selectors:MatchItemTemplateSelector>
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="8,0,8,0">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                  Checked="ToggleButton_OnChecked" 
+                                  Unchecked="ToggleButton_OnChecked" 
+                                  IsChecked="{Binding ElementName=FieldsRadioButton, Path=IsChecked, Mode=OneWay}" />
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" DockPanel.Dock="Right">
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Center"
+                                    Margin="90,0,0,0">
+                            <TextBlock Text="{Binding Path=MatchesSelectedForNotificationCount}" FontSize="14" Margin="0,8,2,0" Width="15"></TextBlock>
+                            <Image Source="pack://application:,,,/Resources/alarm_24x24.png" Width="14" Height="14" Margin="0,0,5,0"></Image>
+                            <TextBlock FontSize="16" Margin="2,5,2,0" Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">|</TextBlock>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" DockPanel.Dock="Right" Padding="5,0,5,0" Margin="3,0,3,0" Command="{Binding OnRefreshMatchesListCommand}">REFRESH</Button>
+                            <TextBlock FontSize="16" Margin="2,5,2,0" Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">|</TextBlock>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Click="HideClick" Padding="5,0,5,0" Margin="3,0,3,0">HIDE</Button>
+                            <TextBlock FontSize="16" Margin="2,5,2,0" Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">|</TextBlock>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Padding="5,0,5,0" Margin="3,0,3,0" Command="{Binding OnCloseApplicationCommand}">EXIT</Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+                <Border Background="{DynamicResource PrimaryHueLightBrush}"  HorizontalAlignment="Stretch" Height="25" Margin="0,10,0,0" Padding="5">
+                    <TextBlock Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" Text="{Binding Path=Status}"></TextBlock>
+                </Border>
+            </StackPanel>
+
+            <ctrl:Preloader Width="348" Visibility="{Binding MatchesAreLoaded , Converter={StaticResource BTVC}, ConverterParameter='true'}"></ctrl:Preloader>
+            <ListBox Style="{StaticResource MaterialDesignCardsListBox}" 
+                     ItemsSource="{Binding Path=Matches}" 
+                     Visibility="{Binding MatchesAreLoaded, Converter={StaticResource BTVC}, ConverterParameter='false'}"
+                     ItemTemplateSelector="{StaticResource MatchItemDataTemplateSelector}"
+                     x:Name="MatchesListView" 
+                     Margin="0,6,0,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ListBox>
+        </DockPanel>
+    </Grid>
+</Window>
