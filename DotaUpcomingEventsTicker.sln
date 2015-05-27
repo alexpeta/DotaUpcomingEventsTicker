@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaUpcomingEventsTicker", "DotaUpcomingEventsTicker\DotaUpcomingEventsTicker.csproj", "{69EE050E-C2E5-4359-B434-9807B504200A}"
 EndProject
 Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "SetupProject", "SetupProject\SetupProject.isproj", "{EFCCC0AD-2A2A-42A6-AC60-532C3060E147}"
-	ProjectSection(ProjectDependencies) = postProject
-		{69EE050E-C2E5-4359-B434-9807B504200A} = {69EE050E-C2E5-4359-B434-9807B504200A}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution

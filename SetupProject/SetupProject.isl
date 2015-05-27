@@ -341,7 +341,6 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>DotaUpcomingEventsTicker.Content_Files</td><td>{713B0BBA-5913-476C-B9EA-16384C3714FA}</td><td>INSTALLDIR</td><td>2</td><td/><td>dotaupcomingeventsticker.con</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>DotaUpcomingEventsTicker.Primary_output</td><td>{A4BAA2A3-6848-4076-A497-CEAD167BB86E}</td><td>INSTALLDIR</td><td>2</td><td/><td>dotaupcomingeventsticker.pri</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>NewComponent1</td><td>{B2C26B83-A214-4B7D-8A48-757A31E291BC}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
@@ -1867,7 +1866,6 @@
 	<table name="FeatureComponents">
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
-		<row><td>AlwaysInstall</td><td>DotaUpcomingEventsTicker.Content_Files</td></row>
 		<row><td>AlwaysInstall</td><td>DotaUpcomingEventsTicker.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>NewComponent1</td></row>
 	</table>
@@ -1884,7 +1882,6 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>dotaupcomingeventsticker.con</td><td>DotaUpcomingEventsTicker.Content_Files</td><td>DotaUpcomingEventsTicker.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;DotaUpcomingEventsTicker&gt;|ContentFiles</td><td>3</td><td/></row>
 		<row><td>dotaupcomingeventsticker.pri</td><td>DotaUpcomingEventsTicker.Primary_output</td><td>DotaUpcomingEventsTicker.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;DotaUpcomingEventsTicker&gt;|Built</td><td>3</td><td/></row>
 	</table>
 
@@ -2029,7 +2026,6 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>DotaUpcomingEventsTicker.Content_Files</td><td/><td/><td>_5DB8F6D4_02B5_45DC_B22D_9B20883A6BF6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>DotaUpcomingEventsTicker.Primary_output</td><td/><td/><td>_BCE9377E_00C5_4981_8977_909D8590FA57_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>NewComponent1</td><td/><td/><td>_8F117C51_1CD0_42E0_A6C5_DD276E570717_FILTER</td><td/><td/><td/><td/></row>
 	</table>
@@ -2649,7 +2645,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Alex Peta</td><td>0</td><td/><td>-626804874</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Alex Peta</td><td>0</td><td/><td>-626797673</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-626843786</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-626843786</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-626851785</td></row>
@@ -3752,8 +3748,8 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-626843786</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-626843786</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-626841738</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://AlexPeta.ro</td><td>0</td><td/><td>-626790538</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>Alex Peta</td><td>0</td><td/><td>-626804874</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.AlexPeta.ro</td><td>0</td><td/><td>-626793577</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>Alex Peta</td><td>0</td><td/><td>-626797673</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Dota2MatchesTicker</td><td>0</td><td/><td>-626823017</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-626843786</td></row>
 	</table>
@@ -3996,7 +3992,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{7044FD06-45A0-4EEB-A34D-9BD0999EC4B8}</td></row>
 		<row><td>ISUSSignature</td><td>{BDC51E1D-ACB7-424B-A1E8-469A3CAB7DD4}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewShortcuts</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewShortcuts,viewRealSetupDesign,viewSetupDesign,viewFeatureFiles</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4345,7 +4341,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>IS_SQLSERVER_SERVER</td><td/><td/></row>
 		<row><td>IS_SQLSERVER_USERNAME</td><td>sa</td><td/></row>
 		<row><td>InstallChoice</td><td>AR</td><td/></row>
-		<row><td>LAUNCHPROGRAM</td><td>1</td><td/></row>
 		<row><td>LAUNCHPROGRAMCOMPCODE</td><td>{A4BAA2A3-6848-4076-A497-CEAD167BB86E}</td><td/></row>
 		<row><td>LAUNCHPROGRAMFILEKEY</td><td>dotaupcomingeventsticker.pri</td><td/></row>
 		<row><td>LAUNCHREADME</td><td>1</td><td/></row>
@@ -4390,7 +4385,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>RestartManagerOption</td><td>CloseRestart</td><td/></row>
 		<row><td>SERIALNUMBER</td><td/><td/></row>
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
-		<row><td>SHOWLAUNCHPROGRAM</td><td>-1</td><td/></row>
+		<row><td>SHOWLAUNCHPROGRAM</td><td>0</td><td/></row>
 		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION45FULL</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
