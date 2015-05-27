@@ -236,7 +236,7 @@ namespace DotaUpcomingEventsTicker.ViewModels
             RaisePropertyChanged("MatchesSelectedForNotificationCount");
             if (_matchesSelectedForNotificationList.Count > 0)
             {
-                _timer.Change(TIMER_DUETIME, TIMER_PERIOD);
+                _timer.Change(TIMER_DUETIME, TIMER_PERIOD); 
             }
             else
             {
@@ -254,7 +254,17 @@ namespace DotaUpcomingEventsTicker.ViewModels
 
         private void OnTestNotification(object obj)
         {
-            this.FireSendNotificationEvent(Matches.FirstOrDefault());
+            Match casted = obj as Match;
+
+            if(casted != null)
+            {
+                this.OnSetNotificationForMatch(casted);
+                this.FireSendNotificationEvent(casted);
+            }
+            else
+            {
+                this.FireSendNotificationEvent(Matches.FirstOrDefault());
+            }
         }
         #endregion Command Handlers
 
@@ -451,11 +461,7 @@ namespace DotaUpcomingEventsTicker.ViewModels
 
         public void RemoveMatchFromNotificationsList(Match matchToRemove)
         {
-            if(matchToRemove != null)
-            {
-                Match outed;
-                _matchesSelectedForNotificationList.TryRemove(matchToRemove.Id, out outed);
-            }
+            this.OnSetNotificationForMatch(matchToRemove);
         }
     }
 

@@ -13,7 +13,7 @@ namespace DotaUpcomingEventsTicker.ViewModels
         protected bool _disposed;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        protected void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             var handler = PropertyChanged;
             if (handler != null)

@@ -66,6 +66,7 @@
                             <!--<Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>-->
                             <!--<Button Style="{StaticResource MaterialDesignFlatButton}" 
                                     Command="{Binding ElementName=MatchesListView, Path=DataContext.OnTestNotificationCommand}" 
+                                    CommandParameter="{Binding}"
                                     Width="60" 
                                     Height="17" 
                                     Margin="120,0,0,0"
