@@ -60,8 +60,7 @@ namespace DotaUpcomingEventsTicker
 
             _mainViewModel.SendNotification += _mainViewModel_SendNotification;
             _mainViewModel.CloseApp += _mainViewModel_CloseApp;
-
-            _notificationViewModel.CloseApp += _notificationViewModel_CloseApp;
+            _notificationViewModel.CloseNotification += _notificationViewModel_CloseNotification;
 
 
             this.DataContext = _mainViewModel;
@@ -96,7 +95,7 @@ namespace DotaUpcomingEventsTicker
         {
             _mainViewModel.SendNotification -= _mainViewModel_SendNotification;
             _mainViewModel.SendNotification -= _mainViewModel_CloseApp;
-            _notificationViewModel.CloseApp -= _notificationViewModel_CloseApp;
+            _notificationViewModel.CloseNotification -= _notificationViewModel_CloseNotification;
 
             _mainViewModel.Dispose();
             this._notificationWindow.Close();
@@ -112,12 +111,12 @@ namespace DotaUpcomingEventsTicker
             string assemblyName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
             Stream iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/" + assemblyName + ";component/Resources/dota.ico")).Stream;
 
-            _notificationIcon.Icon = new System.Drawing.Icon(iconStream);//"dota.ico");
+            _notificationIcon.Icon = new System.Drawing.Icon(iconStream);
             _notificationIcon.Visible = true;
 
             _notificationIcon.Click += (object sender, EventArgs args) =>
                 {
-                    _notificationViewModel_CloseApp(null, new EventArgs());
+                    _notificationViewModel_CloseNotification(null, new SendNotificationEventArgs());
                     this.Show();
                     this.WindowState = WindowState.Normal;
                 };
@@ -148,13 +147,15 @@ namespace DotaUpcomingEventsTicker
 
         private void _mainViewModel_SendNotification(object sender, SendNotificationEventArgs e)
         {
+            //TODO;
+            _notificationViewModel.Match = e.Match;
             _notificationWindow.Show();
         }
         private void _mainViewModel_CloseApp(object sender, EventArgs e)
         {
             _mainViewModel.SendNotification -= _mainViewModel_SendNotification;
             _mainViewModel.SendNotification -= _mainViewModel_CloseApp;
-            _notificationViewModel.CloseApp -= _notificationViewModel_CloseApp;
+            _notificationViewModel.CloseNotification -= _notificationViewModel_CloseNotification;
 
             _mainViewModel.Dispose();
             this._notificationWindow.Close();
@@ -162,10 +163,12 @@ namespace DotaUpcomingEventsTicker
             _notificationIcon.Dispose();
             this.Close();
         }
-        private void _notificationViewModel_CloseApp(object sender, EventArgs e)
+        private void _notificationViewModel_CloseNotification(object sender, SendNotificationEventArgs e)
         {
             _notificationViewModel.Dispose();
             _notificationWindow.Hide();
+
+            _mainViewModel.RemoveMatchFromNotificationsList(e.Match);
         }
         #endregion Private Methods
 

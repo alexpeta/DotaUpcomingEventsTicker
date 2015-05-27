@@ -63,7 +63,14 @@
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1">
                             <TextBlock Text="vs"  Margin="5,0,0,0" />
-                            <Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>
+                            <!--<Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>-->
+                            <!--<Button Style="{StaticResource MaterialDesignFlatButton}" 
+                                    Command="{Binding ElementName=MatchesListView, Path=DataContext.OnTestNotificationCommand}" 
+                                    Width="60" 
+                                    Height="17" 
+                                    Margin="120,0,0,0"
+                                    Padding="0"
+                                    Grid.Column="1">TEST</Button>-->
                         </StackPanel>
                        
 
@@ -130,13 +137,13 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
-                            <Image Source="{Binding Path=Opponent1.ImagePath, Converter={StaticResource DBG}}" VerticalAlignment="Center"></Image>
+                            <Image Source="{Binding Path=Opponent1.ImagePath, Converter={StaticResource DBG}}"  VerticalAlignment="Center"></Image>
                             <TextBlock Text="{Binding Path=Opponent1.Name}"   VerticalAlignment="Center" Margin="5,0,0,0" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1">
                             <TextBlock Text="vs"  Margin="5,0,0,0" />
-                            <Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>
+                            <!--<Image Source="{Binding Path=LeagueImage}" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="17" Margin="120,0,0,0"></Image>-->
                         </StackPanel>
 
                         <StackPanel Grid.Row="2"  Orientation="Horizontal" VerticalAlignment="Center" >

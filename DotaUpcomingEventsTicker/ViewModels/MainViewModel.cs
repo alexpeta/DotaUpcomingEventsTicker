@@ -97,6 +97,9 @@ namespace DotaUpcomingEventsTicker.ViewModels
         public IDelegateCommand OnRefreshMatchesListCommand { get; private set; }
         public IDelegateCommand OnSetNotificationForMatchCommand { get; private set; }
         public IDelegateCommand OnCloseApplicationCommand { get; private set; }
+
+        public IDelegateCommand OnTestNotificationCommand { get; private set; }
+
         #endregion Public Commands
 
         #region Constructors
@@ -110,10 +113,13 @@ namespace DotaUpcomingEventsTicker.ViewModels
             OnSetNotificationForMatchCommand = new DelegateCommand(OnSetNotificationForMatch);
             OnCloseApplicationCommand = new DelegateCommand(OnCloseApplication);
 
+            OnTestNotificationCommand = new DelegateCommand(OnTestNotification);
+
             _timer = new Timer(RunScrapperToLoadMatches, this.Scraper, Timeout.Infinite, Timeout.Infinite);
 
             this.StartLoadingScrapperAndData();
         }
+
         #endregion Constructors
 
         #region Timer EventHandlers
@@ -174,7 +180,7 @@ namespace DotaUpcomingEventsTicker.ViewModels
                             }
 
                             this.MatchesAreLoaded = true;
-                            this.Status = string.Empty;
+                            this.Status = "Last refreshed : " + DateTime.Now.ToString("HH:mm:ss tt");
                         });
                 }
             }
@@ -244,6 +250,11 @@ namespace DotaUpcomingEventsTicker.ViewModels
             {
                 this.CloseApp(this, new EventArgs());
             }
+        }
+
+        private void OnTestNotification(object obj)
+        {
+            this.FireSendNotificationEvent(Matches.FirstOrDefault());
         }
         #endregion Command Handlers
 
@@ -437,11 +448,24 @@ namespace DotaUpcomingEventsTicker.ViewModels
             }
         }
         #endregion IDisposable
+
+        public void RemoveMatchFromNotificationsList(Match matchToRemove)
+        {
+            if(matchToRemove != null)
+            {
+                Match outed;
+                _matchesSelectedForNotificationList.TryRemove(matchToRemove.Id, out outed);
+            }
+        }
     }
 
     public class SendNotificationEventArgs : EventArgs
     {
         public Match Match { get; set; }
+
+        public SendNotificationEventArgs()
+        {
+        }
         public SendNotificationEventArgs(Match match)
         {
             Match = match;
