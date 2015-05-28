@@ -11,49 +11,41 @@ using System.Windows.Media.Imaging;
 
 namespace DotaUpcomingEventsTicker
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        #region Statics
         #region One Instance App
         private static readonly Semaphore singleInstanceWatcher;
         private static readonly bool createdNew;
+        #endregion One Instance App
 
+        private static void FocusAndRestoreProcessWindow()
+        {
+            Process current = Process.GetCurrentProcess();
+            NativeApi.SetForegroundWindow(current.MainWindowHandle);
+            NativeApi.ShowWindow(current.MainWindowHandle, DotaUpcomingEventsTicker.Native.NativeApi.WindowShowStyle.Restore);
+            NativeApi.SendMessage(current.MainWindowHandle, NativeApi.WM_SYSCOMMAND, NativeApi.SC_RESTORE, 0);
+        }
+        #endregion Statics
+
+        #region Members
+        private NotifyIcon _trayIcon = new NotifyIcon();
+        private MainViewModel _mainViewModel = new MainViewModel();
+        private NotificationViewModel _notificationViewModel = new NotificationViewModel();
+        private NotificationWindow _notificationWindow = new NotificationWindow();
+        #endregion Members
+
+        #region Constructors
         static MainWindow()
         {
-            singleInstanceWatcher = new Semaphore(0, 1, "SomeUniqueStringIdentifyingMyApp", out createdNew);
+            singleInstanceWatcher = new Semaphore(0, 1, "DotaUpcomingEventsTicker-e56182e4-7b09-4d0e-8257-e9789e450067", out createdNew);
 
-            if (createdNew)
+            if (!createdNew)
             {
-                ;
-            }
-            else
-            {
-                Process current = Process.GetCurrentProcess();
-
-                foreach (Process process in Process.GetProcessesByName(current.ProcessName))
-                {
-                    if (process.Id != current.Id)
-                    {
-                        NativeApi.SetForegroundWindow(process.MainWindowHandle);
-                        NativeApi.ShowWindow(process.MainWindowHandle, DotaUpcomingEventsTicker.Native.NativeApi.WindowShowStyle.Restore);
-                        break;
-                    }
-                }
-
+                MainWindow.FocusAndRestoreProcessWindow();
                 Environment.Exit(-2);
             }
         }
-        #endregion One Instance App
-
-        private NotifyIcon _notificationIcon = new NotifyIcon();
-
-        private MainViewModel _mainViewModel = new MainViewModel();
-        private NotificationViewModel _notificationViewModel = new NotificationViewModel();
-
-        private NotificationWindow _notificationWindow = new NotificationWindow();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -70,6 +62,7 @@ namespace DotaUpcomingEventsTicker
             this.LoadTrayIcon();
             this.MoveWindowPositionAboveTaskTray();
         }
+        #endregion Constructors
 
         #region Overrides
         protected override void OnStateChanged(EventArgs e)
@@ -99,8 +92,8 @@ namespace DotaUpcomingEventsTicker
 
             _mainViewModel.Dispose();
             this._notificationWindow.Close();
-            _notificationIcon.Visible = false;
-            _notificationIcon.Dispose();
+            _trayIcon.Visible = false;
+            _trayIcon.Dispose();
             base.OnClosing(e);
         }
         #endregion Overrides
@@ -111,29 +104,20 @@ namespace DotaUpcomingEventsTicker
             string assemblyName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
             Stream iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/" + assemblyName + ";component/Resources/dota.ico")).Stream;
 
-            _notificationIcon.Icon = new System.Drawing.Icon(iconStream);
-            _notificationIcon.Visible = true;
+            _trayIcon.Icon = new System.Drawing.Icon(iconStream);
+            _trayIcon.Visible = true;
 
-            _notificationIcon.Click += (object sender, EventArgs args) =>
-                {
-                    _notificationViewModel_CloseNotification(null, new SendNotificationEventArgs());
-                    this.Show();
-                    this.WindowState = WindowState.Normal;
-                };
-            _notificationIcon.DoubleClick += (object sender, EventArgs args) =>
-                {
-                    this.Show();
-                    this.WindowState = WindowState.Normal;
-                };
-            _notificationIcon.MouseDown += (object sender, System.Windows.Forms.MouseEventArgs args) =>
-            {
-                if (args.Button == System.Windows.Forms.MouseButtons.Right)
-                {
-                    //System.Windows.Controls.ContextMenu menu = (System.Windows.Controls.ContextMenu)this.FindResource("NotifierContextMenu");
-                    //menu.IsOpen = true;
-                    _mainViewModel.IsContextMenuVisible = true;
-                }
-            };
+            _trayIcon.Click += this.OnClickTrayIcon;
+
+            //_trayIcon.MouseDown += (object sender, System.Windows.Forms.MouseEventArgs args) =>
+            //{
+            //    if (args.Button == System.Windows.Forms.MouseButtons.Right)
+            //    {
+            //        //System.Windows.Controls.ContextMenu menu = (System.Windows.Controls.ContextMenu)this.FindResource("NotifierContextMenu");
+            //        //menu.IsOpen = true;
+            //        //_mainViewModel.IsContextMenuVisible = true;
+            //    }
+            //};
         }
         private void MoveWindowPositionAboveTaskTray()
         {
@@ -144,7 +128,18 @@ namespace DotaUpcomingEventsTicker
             _notificationWindow.Left = desktopWorkingArea.Right - _notificationWindow.Width;
             _notificationWindow.Top = desktopWorkingArea.Bottom - _notificationWindow.Height;
         }
+        #endregion Private Methods
 
+        #region EventHandlers
+        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            //FieldsRadioButton.IsChecked = ((ToggleButton)sender).IsChecked;
+            //ButtonsRadioButton.IsChecked = !((ToggleButton)sender).IsChecked;
+        }
+        private void HideClick(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+        }
         private void _mainViewModel_SendNotification(object sender, SendNotificationEventArgs e)
         {
             //TODO;
@@ -159,8 +154,10 @@ namespace DotaUpcomingEventsTicker
 
             _mainViewModel.Dispose();
             this._notificationWindow.Close();
-            _notificationIcon.Visible = false;
-            _notificationIcon.Dispose();
+
+            _trayIcon.Click -= this.OnClickTrayIcon;
+            _trayIcon.Visible = false;
+            _trayIcon.Dispose();
             this.Close();
         }
         private void _notificationViewModel_CloseNotification(object sender, SendNotificationEventArgs e)
@@ -170,20 +167,14 @@ namespace DotaUpcomingEventsTicker
 
             _mainViewModel.RemoveMatchFromNotificationsList(e.Match);
         }
-        #endregion Private Methods
-
-        #region EventHandlers
-        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        private void OnClickTrayIcon(object sender, EventArgs args)
         {
-            //FieldsRadioButton.IsChecked = ((ToggleButton)sender).IsChecked;
-            //ButtonsRadioButton.IsChecked = !((ToggleButton)sender).IsChecked;
-        }
-
-        private void HideClick(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
+            _notificationViewModel_CloseNotification(null, new SendNotificationEventArgs());
+            MainWindow.FocusAndRestoreProcessWindow();
+            this.Show();
+            this.WindowState = WindowState.Normal;
         }
         #endregion EventHandlers
-
+        
     }
 }
