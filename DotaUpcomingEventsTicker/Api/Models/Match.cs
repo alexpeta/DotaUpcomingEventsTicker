@@ -114,7 +114,11 @@ namespace DotaUpcomingEventsTicker.Api.Models
         {
             get
             {
-                return string.Equals("WATCH", TimeToMatchLeft, StringComparison.CurrentCultureIgnoreCase);
+                return string.Equals("WATCH", TimeToMatchLeft, StringComparison.CurrentCultureIgnoreCase) ||
+                       string.Equals("0d 0h", TimeToMatchLeft, StringComparison.CurrentCultureIgnoreCase) ||
+                       string.Equals("0h 0m", TimeToMatchLeft, StringComparison.CurrentCultureIgnoreCase) ||
+                       string.Equals("0m 0s", TimeToMatchLeft, StringComparison.CurrentCultureIgnoreCase);
+                ;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using DotaUpcomingEventsTicker.Api.Models;
 using DotaUpcomingEventsTicker.Api.Scraper;
 using DotaUpcomingEventsTicker.Commands;
+using DotaUpcomingEventsTicker.DAL;
 using DotaUpcomingEventsTicker.Enums;
 using HtmlAgilityPack;
 using System;
@@ -19,9 +20,6 @@ namespace DotaUpcomingEventsTicker.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private static readonly ConcurrentDictionary<string, Match> _matchesSelectedForNotificationList = new ConcurrentDictionary<string,Match>();
-
-
         private Timer _timer;
         private TimeSpan TIMER_PERIOD = TimeSpan.FromMinutes(1);
         private TimeSpan TIMER_DUETIME = TimeSpan.FromMinutes(1);
@@ -59,14 +57,26 @@ namespace DotaUpcomingEventsTicker.ViewModels
         {
             get
             {
-                return _matchesSelectedForNotificationList.Count;
+                return MemoryRepository.Count();
             }
         }
         
         public ObservableCollection<Match> Matches { get; set; }
 
-        public IScraper Scraper { get; set; }
+        private IRepository<Match> _matchRepository;
+        public IRepository<Match> MatchRepository
+        {
+            get { return _matchRepository; }
+            private set { _matchRepository = value; }
+        }
 
+        private IMemoryRepository<Match> _memoryRepository;
+        public IMemoryRepository<Match> MemoryRepository
+        {
+            get { return _memoryRepository; }
+            set { _memoryRepository = value; }
+        }
+        
         private bool _isParentWindowDeactivated;
         public bool IsParentWindowDeactivated
         {
@@ -78,7 +88,6 @@ namespace DotaUpcomingEventsTicker.ViewModels
             }
         }
 
-
         private bool _isContextMenuVisible;
         public bool IsContextMenuVisible
         {
@@ -89,7 +98,6 @@ namespace DotaUpcomingEventsTicker.ViewModels
                 RaisePropertyChanged();
             }   
         }
-        
         #endregion Public Properties
 
         #region Public Commands
@@ -99,14 +107,15 @@ namespace DotaUpcomingEventsTicker.ViewModels
         public IDelegateCommand OnCloseApplicationCommand { get; private set; }
 
         public IDelegateCommand OnTestNotificationCommand { get; private set; }
-
         #endregion Public Commands
 
         #region Constructors
         public MainViewModel()
         {
             Matches = new ObservableCollection<Match>();
-            Scraper = new GosugamersScraper("http://www.gosugamers.net/dota2/gosubet");
+            MatchRepository = new MatchRepository();
+            MemoryRepository = new SimpleMemoryRepository();
+
 
             OnViewLiveMatchCommand = new DelegateCommand(OnViewLiveMatch);
             OnRefreshMatchesListCommand = new DelegateCommand(OnRefreshMatches);
@@ -115,82 +124,62 @@ namespace DotaUpcomingEventsTicker.ViewModels
 
             OnTestNotificationCommand = new DelegateCommand(OnTestNotification);
 
-            _timer = new Timer(RunScrapperToLoadMatches, this.Scraper, Timeout.Infinite, Timeout.Infinite);
+            _timer = new Timer(RunScrapperToLoadMatches, null, Timeout.Infinite, Timeout.Infinite);
 
             this.StartLoadingScrapperAndData();
         }
-
         #endregion Constructors
 
         #region Timer EventHandlers
         private void RunScrapperToLoadMatches(object state)
         {
-            IScraper scraper = state as IScraper;
             Dispatcher dispatchObject = Application.Current.Dispatcher;
 
-            if (scraper != null)
+            List<Match> parsedMatches = new List<Match>();
+
+            try
             {
                 dispatchObject.Invoke(() =>
-                       {
-                           MatchesAreLoaded = false;
-                           Status = "Please wait, we are getting the matches..";
-                       });
-
-                Scraper.LoadDocument();
-
-                List<Match> parsedMatches = new List<Match>();
-
-                HtmlNodeCollection upcomingMatchesTableRows = Scraper.GetHtmlNodesByXpath(XpathEnums.UpcomingAnchors);
-                if (upcomingMatchesTableRows != null)
                 {
-                    foreach (var item in this.GetMatchesFromAnchorHtmlNodeCollection(upcomingMatchesTableRows))
-                    {
-                        parsedMatches.Add(item);
-                    }
-                }
+                    MatchesAreLoaded = false;
+                    Status = "Please wait, we are getting the matches..";
+                });
 
-                if (dispatchObject == null || dispatchObject.CheckAccess())
+                parsedMatches = MatchRepository.GetList();
+
+                dispatchObject.Invoke(() =>
                 {
+
                     this.Matches.Clear();
-                    parsedMatches.ForEach(this.Matches.Add);
-                    this.MatchesAreLoaded = true;
-                }
-                else
-                {
-                    dispatchObject.Invoke(() =>
+                    foreach (Match match in parsedMatches)
+                    {
+                        if (MemoryRepository.Contains(match))
                         {
-
-                            this.Matches.Clear();
-                            foreach (Match match in parsedMatches)
+                            if (!match.IsLive)
                             {
-                                if (_matchesSelectedForNotificationList.ContainsKey(match.Id))
-                                {
-                                    if (!match.IsLive)
-                                    {
-                                        match.IsMarkedForNotification = true;
-                                    }
-                                    else
-                                    {
-                                        //Show Notification.
-                                        this.FireSendNotificationEvent(match);
-                                    }
-                                }
-
-                                this.Matches.Add(match);
+                                match.IsMarkedForNotification = true;
                             }
+                            else
+                            {
+                                //Show Notification.
+                                this.FireSendNotificationEvent(match);
+                            }
+                        }
 
-                            this.MatchesAreLoaded = true;
-                            this.Status = "Last refreshed : " + DateTime.Now.ToString("HH:mm:ss tt");
-                        });
-                }
+                        this.Matches.Add(match);
+                    }
+
+                    this.MatchesAreLoaded = true;
+                    this.Status = "Last refreshed : " + DateTime.Now.ToString("HH:mm:ss tt");
+                });
             }
-            else
+            catch (Exception ex)
             {
                 dispatchObject.Invoke(() =>
-                    {
-                        this.MatchesAreLoaded = true;
-                        this.Status = "Failed to load matches. Please retry again.";
-                    });
+                {
+                    this.MatchesAreLoaded = true;
+                    this.Status = "Failed to load matches. Please retry.";
+                });
             }
         }
         #endregion Timer EventHandlers
@@ -222,19 +211,18 @@ namespace DotaUpcomingEventsTicker.ViewModels
             Match casted = obj as Match;
             if (casted != null)
             {
-                if (!_matchesSelectedForNotificationList.ContainsKey(casted.Id))
+                if (!MemoryRepository.Contains(casted))
                 {
-                    _matchesSelectedForNotificationList.TryAdd(casted.Id,casted);
+                    MemoryRepository.Add(casted);
                 }
                 else
                 {
-                    Match outed;
-                    _matchesSelectedForNotificationList.TryRemove(casted.Id, out outed);
+                    MemoryRepository.Remove(casted);
                 }
             }
 
             RaisePropertyChanged("MatchesSelectedForNotificationCount");
-            if (_matchesSelectedForNotificationList.Count > 0)
+            if (MemoryRepository.Count() > 0)
             {
                 _timer.Change(TIMER_DUETIME, TIMER_PERIOD); 
             }
@@ -251,7 +239,6 @@ namespace DotaUpcomingEventsTicker.ViewModels
                 this.CloseApp(this, new EventArgs());
             }
         }
-
         private void OnTestNotification(object obj)
         {
             Match casted = obj as Match;
@@ -271,35 +258,9 @@ namespace DotaUpcomingEventsTicker.ViewModels
         #region Private Methods
         private async void StartLoadingScrapperAndData()
         {
-            //MatchesAreLoaded = false;
-            //Status = "Please wait, we are getting the matches..";
-
             await Task.Run(() => {
-                this.RunScrapperToLoadMatches(this.Scraper);
+                this.RunScrapperToLoadMatches(null);
             });
-
-            //this.MatchesAreLoaded = true;
-            //this.Status = "Matches data successfully loaded.";
-        }
-        private Task<List<Match>> GetLiveMatchesAsync()
-        {
-            Func<List<Match>> func = () =>
-            {
-                List<Match> parsedMatches = new List<Match>();
-
-                HtmlNodeCollection upcomingMatchesTableRows = Scraper.GetHtmlNodesByXpath(XpathEnums.UpcomingAnchors);
-                if (upcomingMatchesTableRows != null)
-                {
-                    foreach (var item in this.GetMatchesFromAnchorHtmlNodeCollection(upcomingMatchesTableRows))
-                    {
-                        parsedMatches.Add(item);
-                    }
-                }
-
-                return parsedMatches;
-            };
-
-            return Task.Run<List<Match>>(func);
         }
         private List<Match> GetMatchesFromAnchorHtmlNodeCollection(HtmlNodeCollection tableRows)
         {
