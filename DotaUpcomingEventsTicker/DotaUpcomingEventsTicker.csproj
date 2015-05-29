@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Api\Models\Hero.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Commands\IDelegateCommand.cs" />
     <Compile Include="Controls\Preloader.xaml.cs">
@@ -87,6 +88,13 @@
     <Compile Include="Converters\BoolToOppositeConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DebugConverter.cs" />
+    <Compile Include="DAL\IMemoryRepository.cs" />
+    <Compile Include="DAL\IRepository.cs" />
+    <Compile Include="DAL\MatchRepository.cs" />
+    <Compile Include="DAL\SimpleMemoryRepository.cs" />
+    <Compile Include="LiveMatchDetails.xaml.cs">
+      <DependentUpon>LiveMatchDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +109,10 @@
     <Page Include="Controls\Preloader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LiveMatchDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -164,6 +176,116 @@
   <ItemGroup>
     <Content Include="External\MaterialDesignColors.dll" />
     <Content Include="External\MaterialDesignThemes.Wpf.dll" />
+    <Resource Include="Resources\Heroes\1.png" />
+    <Resource Include="Resources\Heroes\10.png" />
+    <Resource Include="Resources\Heroes\100.png" />
+    <Resource Include="Resources\Heroes\101.png" />
+    <Resource Include="Resources\Heroes\102.png" />
+    <Resource Include="Resources\Heroes\103.png" />
+    <Resource Include="Resources\Heroes\104.png" />
+    <Resource Include="Resources\Heroes\105.png" />
+    <Resource Include="Resources\Heroes\106.png" />
+    <Resource Include="Resources\Heroes\107.png" />
+    <Resource Include="Resources\Heroes\109.png" />
+    <Resource Include="Resources\Heroes\11.png" />
+    <Resource Include="Resources\Heroes\110.png" />
+    <Resource Include="Resources\Heroes\111.png" />
+    <Resource Include="Resources\Heroes\112.png" />
+    <Resource Include="Resources\Heroes\12.png" />
+    <Resource Include="Resources\Heroes\13.png" />
+    <Resource Include="Resources\Heroes\14.png" />
+    <Resource Include="Resources\Heroes\15.png" />
+    <Resource Include="Resources\Heroes\16.png" />
+    <Resource Include="Resources\Heroes\17.png" />
+    <Resource Include="Resources\Heroes\18.png" />
+    <Resource Include="Resources\Heroes\19.png" />
+    <Resource Include="Resources\Heroes\2.png" />
+    <Resource Include="Resources\Heroes\20.png" />
+    <Resource Include="Resources\Heroes\21.png" />
+    <Resource Include="Resources\Heroes\22.png" />
+    <Resource Include="Resources\Heroes\23.png" />
+    <Resource Include="Resources\Heroes\25.png" />
+    <Resource Include="Resources\Heroes\26.png" />
+    <Resource Include="Resources\Heroes\27.png" />
+    <Resource Include="Resources\Heroes\28.png" />
+    <Resource Include="Resources\Heroes\29.png" />
+    <Resource Include="Resources\Heroes\3.png" />
+    <Resource Include="Resources\Heroes\30.png" />
+    <Resource Include="Resources\Heroes\31.png" />
+    <Resource Include="Resources\Heroes\32.png" />
+    <Resource Include="Resources\Heroes\33.png" />
+    <Resource Include="Resources\Heroes\34.png" />
+    <Resource Include="Resources\Heroes\35.png" />
+    <Resource Include="Resources\Heroes\36.png" />
+    <Resource Include="Resources\Heroes\37.png" />
+    <Resource Include="Resources\Heroes\38.png" />
+    <Resource Include="Resources\Heroes\39.png" />
+    <Resource Include="Resources\Heroes\4.png" />
+    <Resource Include="Resources\Heroes\40.png" />
+    <Resource Include="Resources\Heroes\41.png" />
+    <Resource Include="Resources\Heroes\42.png" />
+    <Resource Include="Resources\Heroes\43.png" />
+    <Resource Include="Resources\Heroes\44.png" />
+    <Resource Include="Resources\Heroes\45.png" />
+    <Resource Include="Resources\Heroes\46.png" />
+    <Resource Include="Resources\Heroes\47.png" />
+    <Resource Include="Resources\Heroes\48.png" />
+    <Resource Include="Resources\Heroes\49.png" />
+    <Resource Include="Resources\Heroes\5.png" />
+    <Resource Include="Resources\Heroes\50.png" />
+    <Resource Include="Resources\Heroes\51.png" />
+    <Resource Include="Resources\Heroes\52.png" />
+    <Resource Include="Resources\Heroes\53.png" />
+    <Resource Include="Resources\Heroes\54.png" />
+    <Resource Include="Resources\Heroes\55.png" />
+    <Resource Include="Resources\Heroes\56.png" />
+    <Resource Include="Resources\Heroes\57.png" />
+    <Resource Include="Resources\Heroes\58.png" />
+    <Resource Include="Resources\Heroes\59.png" />
+    <Resource Include="Resources\Heroes\6.png" />
+    <Resource Include="Resources\Heroes\60.png" />
+    <Resource Include="Resources\Heroes\61.png" />
+    <Resource Include="Resources\Heroes\62.png" />
+    <Resource Include="Resources\Heroes\63.png" />
+    <Resource Include="Resources\Heroes\64.png" />
+    <Resource Include="Resources\Heroes\65.png" />
+    <Resource Include="Resources\Heroes\66.png" />
+    <Resource Include="Resources\Heroes\67.png" />
+    <Resource Include="Resources\Heroes\68.png" />
+    <Resource Include="Resources\Heroes\69.png" />
+    <Resource Include="Resources\Heroes\7.png" />
+    <Resource Include="Resources\Heroes\70.png" />
+    <Resource Include="Resources\Heroes\71.png" />
+    <Resource Include="Resources\Heroes\72.png" />
+    <Resource Include="Resources\Heroes\73.png" />
+    <Resource Include="Resources\Heroes\74.png" />
+    <Resource Include="Resources\Heroes\75.png" />
+    <Resource Include="Resources\Heroes\76.png" />
+    <Resource Include="Resources\Heroes\77.png" />
+    <Resource Include="Resources\Heroes\78.png" />
+    <Resource Include="Resources\Heroes\79.png" />
+    <Resource Include="Resources\Heroes\8.png" />
+    <Resource Include="Resources\Heroes\80.png" />
+    <Resource Include="Resources\Heroes\81.png" />
+    <Resource Include="Resources\Heroes\82.png" />
+    <Resource Include="Resources\Heroes\83.png" />
+    <Resource Include="Resources\Heroes\84.png" />
+    <Resource Include="Resources\Heroes\85.png" />
+    <Resource Include="Resources\Heroes\86.png" />
+    <Resource Include="Resources\Heroes\87.png" />
+    <Resource Include="Resources\Heroes\88.png" />
+    <Resource Include="Resources\Heroes\89.png" />
+    <Resource Include="Resources\Heroes\9.png" />
+    <Resource Include="Resources\Heroes\90.png" />
+    <Resource Include="Resources\Heroes\91.png" />
+    <Resource Include="Resources\Heroes\92.png" />
+    <Resource Include="Resources\Heroes\93.png" />
+    <Resource Include="Resources\Heroes\94.png" />
+    <Resource Include="Resources\Heroes\95.png" />
+    <Resource Include="Resources\Heroes\96.png" />
+    <Resource Include="Resources\Heroes\97.png" />
+    <Resource Include="Resources\Heroes\98.png" />
+    <Resource Include="Resources\Heroes\99.png" />
     <Resource Include="Resources\alarm_24x24_white.png" />
     <Resource Include="Resources\alarm_24x24.png" />
     <Resource Include="Resources\Flags\AD.png" />
