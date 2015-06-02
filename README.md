@@ -6,7 +6,7 @@ This is a Windows 7, 8, 8.1 program (exe) that goes and scapes the "Live" and "U
 
 The program is written in C# with the UI being made in WPF.
 
-For the UI part, i am using components from [Material Skin](https://github.com/IgnaceMaes/MaterialSkin) - that is a WPF component library for implementing Google "material design".
+For the UI part, i am using components from [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) and [Material Skin](https://github.com/IgnaceMaes/MaterialSkin) - that is a WPF component library for implementing Google "material design".
 
 ## Screenshots
 
