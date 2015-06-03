@@ -15,6 +15,8 @@ For the UI part, i am using components from [MaterialDesignInXamlToolkit](https:
 
 ![alt text](http://i.imgur.com/sEneIFW.png "Pic2")
 
+![alt text](http://i.imgur.com/8KdPLrO.png "Notification")
+
 ## Features
 
 * The live matches will show up in the list and clicking the "WATCH" will open your current default browser and navigate to the stream URL on gosugamers.
